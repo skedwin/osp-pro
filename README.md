@@ -1,6 +1,3 @@
-Here is a **clean, ready-to-copy README.md file** — fully formatted and without any broken code blocks.
-
----
 
 # **OSP Pro**
 

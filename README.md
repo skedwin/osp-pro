@@ -1,249 +1,209 @@
-# osp-pro
+Here is a **clean, ready-to-copy README.md file** — fully formatted and without any broken code blocks.
 
-A Laravel application.
-# OSP Pro
+---
 
-OSP Pro is a Laravel-based web application for managing practitioner profiles, renewals, CPD tracking, and invoicing/payment flows. It includes a thin frontend in Blade with Vite-managed assets, services for profile and CPD normalization, and test coverage for key features.
+# **OSP Pro**
 
-## Key features
+OSP Pro is a Laravel-based web application for managing practitioner profiles, renewals, CPD tracking, invoicing, and payment flows. It uses Blade for the frontend with Vite-managed assets and includes domain services for profile/CPD normalization, with PHPUnit coverage for core logic.
 
-- Practitioner profiles & licensing
+---
 
-- CPD (Continuing Professional Development) normalization and eligibility checks
+## **Key Features**
 
-- Renewal and invoicing UI with integrated payment flow (iframe + fallback)
+* Practitioner profiles & licensing
+* CPD (Continuing Professional Development) normalization & eligibility checks
+* Renewals and invoicing UI with integrated payment iframe + fallback
+* Clean service-driven architecture for testable business logic
+* PHPUnit tests (unit + feature) for essential flows
 
-- Services and controllers separated for testable business logic
+---
 
-- PHPUnit tests (unit and feature) for critical flows
+## **System Contract (High-Level)**
 
-## Quick overview / contract
+**Inputs:**
 
-- Inputs: standard Laravel `.env` config (DB, mail, app URL), session-provided `bio_profile` for practitioner data
+* Standard Laravel `.env` configuration
+* Authenticated session containing `bio_profile`
 
-- Outputs: web UI for practitioners, invoices, and a server-rendered Blade frontend
+**Outputs:**
 
-- Error modes: missing/invalid CPD shapes are normalized by `ProfileService`; payment retry/fallbacks exist in the invoice view
+* Practitioner web UI
+* Invoices and renewal views
+* Blade-rendered frontend
 
-## Requirements
+**Error Modes:**
 
-- PHP 8.0 or newer
+* Invalid CPD shapes normalized by `ProfileService`
+* Payment retry + fallback inside invoice view
 
-- Composer
+---
 
-- Node.js (16+) and npm/yarn
+## **Requirements**
 
-- A database (MySQL / MariaDB / SQLite)
+* PHP 8.0+
+* Composer
+* Node.js 16+
+* MySQL/MariaDB/SQLite
+* Git
 
-- Git (for development)
+---
 
-## Local development (Windows / PowerShell)
+## **Local Development (Windows / PowerShell)**
 
-1. Clone the repo
+### **1. Clone the Repository**
+
+SSH:
 
 ```powershell
-
 git clone git@github.com:skedwin/osp-pro.git
-
 cd osp-pro
-
-If you can't use SSH, clone using HTTPS and provide a Personal Access Token (PAT) when prompted:
-
-```powershell
-
-git clone https://github.com/skedwin/osp-pro.git
-
-cd osp-pro
-
-2. Install PHP dependencies
-
-```powershell
-
-composer install --no-interaction --prefer-dist
-
-3. Install JS dependencies and build assets
-
-```powershell
-
-npm install
-
-# development build (fast)
-
-npm run dev
-
-# production build
-
-npm run build
-
-4. Copy and configure environment
-
-```powershell
-
-copy .env.example .env
-
-# Edit .env for DB, mail, and APP_URL
-
-php artisan key:generate
-
-5. Run database migrations (and seeders if needed)
-
-```powershell
-
-php artisan migrate --seed
-
-6. Start the dev server
-
-```powershell
-
-php artisan serve --host=127.0.0.1 --port=8000
-
-# then open http://127.0.0.1:8000
-
-Notes: If you use XAMPP/Apache, point your virtual host to the `public/` directory instead of using artisan serve.
-
-## Running tests
-
-Run PHPUnit tests:
-
-```powershell
-
-./vendor/bin/phpunit
-
 ```
 
-There are both Unit and Feature tests covering `ProfileService` CPD normalization and the renewals controller logic.
-
-## SSH keys & pushing (GitHub)
-
-Preferred: SSH. Generate an ed25519 key locally, add to `ssh-agent`, then add the public key on GitHub:
+HTTPS:
 
 ```powershell
+git clone https://github.com/skedwin/osp-pro.git
+cd osp-pro
+```
 
-# generate (will create osp_pro_id_ed25519 and .pub in your %USERPROFILE%\.ssh)
+---
 
+### **2. Install PHP Dependencies**
+
+```powershell
+composer install --no-interaction --prefer-dist
+```
+
+---
+
+### **3. Install JS Dependencies & Build Assets**
+
+```powershell
+npm install
+npm run dev   # development
+npm run build # production
+```
+
+---
+
+### **4. Environment Setup**
+
+```powershell
+copy .env.example .env
+php artisan key:generate
+```
+
+Edit `.env` (DB, MAIL, APP_URL).
+
+---
+
+### **5. Migrate the Database**
+
+```powershell
+php artisan migrate --seed
+```
+
+---
+
+### **6. Start the Application**
+
+```powershell
+php artisan serve --host=127.0.0.1 --port=8000
+```
+
+Open: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+
+## **Running Tests**
+
+```powershell
+./vendor/bin/phpunit
+```
+
+Covers:
+
+* CPD normalization (ProfileService)
+* Renewals controller logic
+
+---
+
+## **SSH Setup for GitHub (Recommended)**
+
+### Generate key:
+
+```powershell
 ssh-keygen.exe -t ed25519 -C "your-email@example.com" -f "$env:USERPROFILE\.ssh\osp_pro_id_ed25519" -N ""
+```
 
-# start agent and add key
-
-Start-Service ssh-agent -ErrorAction SilentlyContinue
-
-ssh-add "$env:USERPROFILE\.ssh\osp_pro_id_ed25519"
-
-# print public key and copy to clipboard
-
-Get-Content "$env:USERPROFILE\.ssh\osp_pro_id_ed25519.pub" | Set-Clipboard
-
-Then add the key in GitHub → Settings → SSH and GPG keys → New SSH key. After that, test:
+### Start agent & add key:
 
 ```powershell
+Start-Service ssh-agent -ErrorAction SilentlyContinue
+ssh-add "$env:USERPROFILE\.ssh\osp_pro_id_ed25519"
+```
 
+### Copy public key:
+
+```powershell
+Get-Content "$env:USERPROFILE\.ssh\osp_pro_id_ed25519.pub" | Set-Clipboard
+```
+
+Add to GitHub → **Settings → SSH and GPG keys → New SSH key**
+
+### Test connection:
+
+```powershell
 ssh -T git@github.com
+```
 
+### Push code:
+
+```powershell
 git push -u origin main
+```
 
-Alternative: use HTTPS remote and a Personal Access Token (PAT) if you prefer not to configure SSH.
+---
 
-## Project structure (high level)
+## **Project Structure (Overview)**
 
-- `app/Http/Controllers/` — controllers (UI endpoints)
+```
+app/
+  Http/Controllers/      - Controller layer
+  Services/              - Business logic
 
-- `app/Services/` — domain services (ProfileService, CPDService, etc.)
+resources/views/         - Blade templates
+public/                  - Public assets
+tests/                   - Unit + Feature tests
+```
 
-- `resources/views/` — Blade templates (UI)
+---
 
-- `public/` — public assets and build output
+## **Troubleshooting**
 
-- `tests/` — PHPUnit tests (Unit and Feature)
+* Wrong CPD totals → `ProfileService::getFormattedProfile()` performs normalization
+* Payment iframe issues → check `invoice_details.blade.php`
+* SSH errors on Windows → ensure OpenSSH Client is installed or use Git Bash
 
-## Troubleshooting & tips
+---
 
-- If views show unexpected CPD values, the canonical CPD summary is normalized in `ProfileService::getFormattedProfile()`; the controller reads `cpd_summary` and supplies pre-computed `cpdTotal` and `requiredCpd` to the view.
+## **Contributing**
 
-- Payment flows use a payment iframe with a 7s fallback to open a new tab — check `resources/views/practitioner/renewals/invoice_details.blade.php` for the exact behavior.
+* Fork the repository
+* Create a feature branch
+* Submit a PR with explanation
+* Ensure tests pass before submission
 
-- If `ssh-agent` fails to start on Windows, ensure the OpenSSH Client & Server optional features are installed, or use Git Bash which bundles an SSH agent.
+---
 
-## Contributing
+## **License**
 
-- Fork the repository and open a pull request with a clear description of your changes.
-
-- Run tests and ensure existing tests remain green.
-
-- For larger changes, open an issue first to discuss the design.
-
-## License
-
-See the repository license file for details.
+See the `LICENSE` file included in this repository.
 
 ---
 
 If you want, I can also:
 
-- Commit the new README for you and push to the remote (once your SSH key is registered on GitHub or you allow HTTPS auth), or
-
-- Switch the remote to HTTPS and push now (you'll need to provide a PAT if prompted). 
-
-Tell me which option you prefer and I'll continue.
-
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-#   o s p - p r o 
- 
- 
+✅ Save this into your project as README.md
+✅ Commit and push it for you
+Just say **“commit this README”**.

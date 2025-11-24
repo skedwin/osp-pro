@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* TailAdmin Menu Styles */
+.menu-item {
+    @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-in-out;
+}
+
+.menu-item-active {
+    @apply bg-blue-50 text-blue-600 dark:bg-white/5 dark:text-blue-400;
+}
+
+.menu-item-inactive {
+    @apply text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/5;
+}
+
+.menu-item-icon-active {
+    @apply fill-blue-600 dark:fill-blue-400;
+}
+
+.menu-item-icon-inactive {
+    @apply fill-gray-500 dark:fill-gray-400;
+}
+
+.menu-item-text {
+    @apply flex-1;
+}
+
+.menu-item-arrow {
+    @apply transition-transform duration-300 stroke-gray-500 dark:stroke-gray-400;
+}
+
+.menu-item-arrow-active {
+    @apply rotate-180 stroke-blue-600 dark:stroke-blue-400;
+}
+
+.menu-item-arrow-inactive {
+    @apply rotate-0 stroke-gray-500 dark:stroke-gray-400;
+}
+
+.menu-dropdown {
+    @apply ml-4 border-l-2 border-gray-200 dark:border-gray-800;
+}
+
+.menu-dropdown-item {
+    @apply flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out;
+}
+
+.menu-dropdown-item-active {
+    @apply bg-blue-50 text-blue-600 dark:bg-white/5 dark:text-blue-400;
+}
+
+.menu-dropdown-item-inactive {
+    @apply text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/5;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

@@ -46,8 +46,12 @@ return [
     ],
 
     'nck_api' => [
-    'url' => env('NCK_API_URL', 'https://api.nckenya.go.ke'),
-    'timeout' => env('NCK_API_TIMEOUT', 30),
-],
+        'url' => env('NCK_API_URL', 'https://api.nckenya.go.ke'),
+        'timeout' => env('NCK_API_TIMEOUT', 30),
+    ],
+
+    'outmigration_api' => [
+        'url' => env('OUTMIGRATION_API_URL', env('NCK_API_URL', 'https://api.nckenya.go.ke')),
+    ],
 
 ];

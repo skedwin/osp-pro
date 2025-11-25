@@ -129,7 +129,7 @@
 <!-- ===== Header End ===== -->
 
         <!-- ===== Main Content Start ===== -->
-        <main>
+        <main class="flex-1">
           <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
             <x-flash-messages />
             @hasSection('content')

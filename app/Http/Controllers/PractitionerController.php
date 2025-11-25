@@ -674,8 +674,69 @@ class PractitionerController extends Controller
         return null;
     }
 
+    /**
+     * Show the Outmigration Application page
+     */
+    public function outmigration(Request $request)
+    {
+        if ($redirect = $this->guardSsoPortal($request)) {
+            return $redirect;
+        }
+
+        $token = $request->session()->get('api_token');
+
+        // Fetch reference data needed for the form
+        $countries = $this->fetchReferenceData('/countries', $token);
+        $counties = $this->fetchReferenceData('/counties', $token);
+        $employers = $this->fetchReferenceData('/employers', $token);
+        $workstationTypes = $this->fetchReferenceData('/workstation-types', $token);
+
+        // Marital status options (typically 1=Single, 2=Married, etc. - adjust based on API)
+        $maritalStatusOptions = [
+            ['id' => '1', 'name' => 'Single'],
+            ['id' => '2', 'name' => 'Married'],
+            ['id' => '3', 'name' => 'Divorced'],
+            ['id' => '4', 'name' => 'Widowed'],
+        ];
+
+        // Employment status options
+        $employmentStatusOptions = [
+            ['id' => '1', 'name' => 'Employed'],
+            ['id' => '2', 'name' => 'Self-Employed'],
+            ['id' => '3', 'name' => 'Unemployed'],
+            ['id' => '4', 'name' => 'Retired'],
+        ];
+
+        // Planning return options (1=Yes, 2=No)
+        $planningReturnOptions = [
+            ['id' => '1', 'name' => 'Yes'],
+            ['id' => '2', 'name' => 'No'],
+        ];
+
+        // Outmigration reason options
+        $outmigrationReasonOptions = [
+            ['id' => '1', 'name' => 'Better Employment Opportunities'],
+            ['id' => '2', 'name' => 'Higher Education'],
+            ['id' => '3', 'name' => 'Family Reasons'],
+            ['id' => '4', 'name' => 'Personal Development'],
+            ['id' => '5', 'name' => 'Other'],
+        ];
+
+        return view('practitioner.outmigration', [
+            'title' => 'Outmigration Application',
+            'page' => 'practitioner-outmigration',
+            'countries' => $countries,
+            'counties' => $counties,
+            'employers' => $employers,
+            'workstationTypes' => $workstationTypes,
+            'maritalStatusOptions' => $maritalStatusOptions,
+            'employmentStatusOptions' => $employmentStatusOptions,
+            'planningReturnOptions' => $planningReturnOptions,
+            'outmigrationReasonOptions' => $outmigrationReasonOptions,
+        ]);
+    }
+
     // Simple view methods
-    public function outmigration() { return view('practitioner.outmigration', ['title' => 'Outmigration', 'page' => 'practitioner-outmigration']); }
     public function privatePractice() { return view('practitioner.private-practice', ['title' => 'Private Practice', 'page' => 'practitioner-private-practice']); }
     public function cpd() { return view('practitioner.cpd', ['title' => 'Continuing Professional Development', 'page' => 'practitioner-cpd']); }
 }

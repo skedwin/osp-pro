@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\PractitionerController;
+use App\Http\Controllers\OutMigrationController;
 use App\Http\Controllers\Practitioner\CPDController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,9 @@ Route::prefix('practitioner')->group(function () {
     Route::get('/invoices/{id}', [PractitionerController::class, 'invoiceDetails'])->name('practitioner.invoices.show');
     Route::match(['get','post'], '/pesaflow/callback', [PractitionerController::class, 'pesaflowCallback'])->name('practitioner.pesaflow.callback');
     Route::get('/outmigration', [PractitionerController::class, 'outmigration'])->name('practitioner.outmigration');
+    Route::post('/outmigration/apply', [OutMigrationController::class, 'apply'])->name('practitioner.outmigration.apply');
+    Route::get('/outmigration/invoices', [OutMigrationController::class, 'invoices'])->name('practitioner.outmigration.invoices');
+    Route::get('/outmigration/invoices/{id}', [OutMigrationController::class, 'invoiceDetails'])->name('practitioner.outmigration.invoices.show');
     Route::get('/private-practice', [PractitionerController::class, 'privatePractice'])->name('practitioner.private-practice');
     Route::get('/cpd', [PractitionerController::class, 'cpd'])->name('practitioner.cpd');
 });

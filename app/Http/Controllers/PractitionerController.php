@@ -395,9 +395,16 @@ class PractitionerController extends Controller
             usort($applications, function($a, $b) {
                 $invA = $a['invoice_details'] ?? $a;
                 $invB = $b['invoice_details'] ?? $b;
-                $dateA = strtotime($invA['invoice_date'] ?? $invA['created_at'] ?? '');
-                $dateB = strtotime($invB['invoice_date'] ?? $invB['created_at'] ?? '');
-                return $dateB <=> $dateA;
+                
+                // Try multiple date fields in order of preference
+                $dateA = $invA['invoice_date'] ?? $a['application_date'] ?? $invA['created_at'] ?? '';
+                $dateB = $invB['invoice_date'] ?? $b['application_date'] ?? $invB['created_at'] ?? '';
+                
+                $timestampA = $dateA ? strtotime($dateA) : 0;
+                $timestampB = $dateB ? strtotime($dateB) : 0;
+                
+                // Sort by most recent first (newest to oldest)
+                return $timestampB <=> $timestampA;
             });
         }
 

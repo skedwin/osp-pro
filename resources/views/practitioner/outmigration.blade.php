@@ -269,7 +269,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Department
@@ -288,7 +288,9 @@
                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm">
                     @error('current_position') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
+            </div>
 
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Years of Experience
@@ -298,9 +300,7 @@
                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm">
                     @error('experience_years') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Duration with Current Employer (years)
@@ -310,7 +310,9 @@
                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm">
                     @error('duration_current_employer') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
+            </div>
 
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Do you plan to return? <span class="text-red-500">*</span>
@@ -383,14 +385,14 @@
                 <p class="font-semibold">Declaration</p>
                 <p>
                     By submitting this application, I confirm the information provided is accurate and that I will
-                    comply with NC Kenya’s verification process. Misrepresentation can lead to disciplinary action.
+                    comply with Nursing Council of Kenya’s verification process. Misrepresentation can lead to disciplinary action.
                 </p>
             </div>
         </section>
 
         <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
             <div class="text-sm text-slate-500">
-                Need help? Email <span class="text-slate-700 font-semibold">support@nckenya.go.ke</span> or call <span class="font-semibold">+254 20 000 000</span>.
+                Need help? Email <span class="text-slate-700 font-semibold">support@nckenya.go.ke</span> or call <span class="font-semibold">+254 20 7854665/9</span>.
             </div>
             <button type="submit"
                     class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600"

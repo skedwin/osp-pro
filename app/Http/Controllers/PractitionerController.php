@@ -744,6 +744,64 @@ class PractitionerController extends Controller
     }
 
     // Simple view methods
-    public function privatePractice() { return view('practitioner.private-practice', ['title' => 'Private Practice', 'page' => 'practitioner-private-practice']); }
+    public function privatePractice(Request $request) {
+        if ($redirect = $this->guardSsoPortal($request)) { 
+            return $redirect; 
+        }
+
+        $token = $request->session()->get('api_token');
+
+        // Use fetchReferenceData helper like outmigration does
+        $counties = $this->fetchReferenceData('/counties', $token);
+        $proposedPracticeRaw = $this->fetchReferenceData('/proposed-private-practice', $token);
+        
+        // API returns: {"status":"200","message":{"proposed_practice_types":[...]}}
+        // fetchReferenceData normalizes to return the array directly
+        $proposedPractices = [];
+        $practiceModes = [];
+        
+        foreach ($proposedPracticeRaw as $item) {
+            $pid = $item['id'] ?? null;
+            $pname = $item['proposed_practice_type'] ?? $item['proposed_practice'] ?? $item['name'] ?? null;
+            
+            if ($pid && $pname) {
+                // Clean up whitespace (API returns values with \r)
+                $proposedPractices[] = [
+                    'id' => $pid, 
+                    'name' => trim($pname)
+                ];
+            }
+        }
+        
+        // Try to fetch practice modes from separate endpoint
+        // Likely endpoints: /practice-modes, /private-practice-modes, or similar
+        $practiceModesRaw = $this->fetchReferenceData('/practice-modes', $token);
+        
+        if (empty($practiceModesRaw)) {
+            // Try alternative endpoint if first one fails
+            $practiceModesRaw = $this->fetchReferenceData('/private-practice-modes', $token);
+        }
+        
+        foreach ($practiceModesRaw as $mode) {
+            $mid = $mode['id'] ?? $mode['practice_mode_id'] ?? $mode['mode_id'] ?? null;
+            // Check for various possible field names
+            $mname = $mode['practice_mode'] ?? $mode['mode'] ?? $mode['name'] ?? $mode['practice_mode_name'] ?? null;
+            
+            if ($mid && $mname) {
+                $practiceModes[] = [
+                    'id' => $mid, 
+                    'name' => trim($mname)
+                ];
+            }
+        }
+
+        return view('practitioner.private_practice.apply', [
+            'title' => 'Private Practice Application',
+            'page' => 'practitioner-private-practice',
+            'counties' => $counties,
+            'proposedPractices' => $proposedPractices,
+            'practiceModes' => $practiceModes,
+        ]);
+    }
     public function cpd() { return view('practitioner.cpd', ['title' => 'Continuing Professional Development', 'page' => 'practitioner-cpd']); }
 }

@@ -42,6 +42,13 @@ Route::prefix('practitioner')->group(function () {
     Route::get('/outmigration/invoices', [OutMigrationController::class, 'invoices'])->name('practitioner.outmigration.invoices');
     Route::get('/outmigration/invoices/{id}', [OutMigrationController::class, 'invoiceDetails'])->name('practitioner.outmigration.invoices.show');
     Route::get('/private-practice', [PractitionerController::class, 'privatePractice'])->name('practitioner.private-practice');
+    // Private Practice module
+    Route::post('/private-practice/apply', [\App\Http\Controllers\PrivatePracticeController::class, 'apply'])
+        ->name('practitioner.private-practice.apply');
+    Route::get('/private-practice/invoices', [\App\Http\Controllers\PrivatePracticeController::class, 'invoices'])
+        ->name('practitioner.private-practice.invoices');
+    Route::get('/private-practice/invoices/{id}', [\App\Http\Controllers\PrivatePracticeController::class, 'invoiceDetails'])
+        ->name('practitioner.private-practice.invoices.show');
     Route::get('/cpd', [PractitionerController::class, 'cpd'])->name('practitioner.cpd');
 });
 

@@ -56,10 +56,10 @@
                     href="{{ route('portal.profile') }}"
                     @click="selected = 'Profile'"
                     class="menu-item group"
-                    :class="(selected === 'Profile') || page === 'profile' ? 'menu-item-active' : 'menu-item-inactive'"
+                    :class="(selected === 'Profile') && page === 'profile' ? 'menu-item-active' : 'menu-item-inactive'"
                 >
                     <svg
-                        :class="(selected === 'Profile') || page === 'profile' ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                        :class="(selected === 'Profile') && page === 'profile' ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
                         width="24" height="24" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >

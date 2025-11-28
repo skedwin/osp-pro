@@ -14,7 +14,7 @@
         <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
                 <p class="text-sm uppercase tracking-widest opacity-90 font-bold">Practice Setup</p>
-                <h1 class="text-3xl font-bold">Private Practice Application</h1>
+                <h1 class="text-3xl font-bold">Private Practice Renewal Application</h1>
                 <p class="text-sm lg:text-base mt-2 max-w-2xl text-white/80">
                     Apply for or renew your private practice license.
                 </p>

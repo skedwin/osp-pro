@@ -132,11 +132,12 @@
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Application Date
                     </label>
-                    <input type="datetime-local" name="application_date"
-                           value="{{ old('application_date') }}"
+                    <input type="datetime-local" name="application_date" value="{{ old('application_date', now()->format('Y-m-d\TH:i')) }}"
                            class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm">
                     <p class="text-xs text-slate-500 mt-1">Defaults to current date/time if left blank.</p>
                     @error('application_date') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+
+                    
                 </div>
             </div>
         </section>
@@ -392,7 +393,7 @@
 
         <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
             <div class="text-sm text-slate-500">
-                Need help? Email <span class="text-slate-700 font-semibold">support@nckenya.go.ke</span> or call <span class="font-semibold">+254 20 7854665/9</span>.
+                Need help? Email <span class="text-slate-700 font-semibold">support@nckenya.go.ke</span> or call <span class="font-semibold">+254 20 </span>.
             </div>
             <button type="submit"
                     class="flex items-center justify-center p-3 font-medium text-white rounded-lg bg-brand-500 text-theme-sm hover:bg-brand-600"
